@@ -129,7 +129,7 @@ class UserCreator:
             json.dump(self.users_dict, file)
 
 
-if __name__ == "__main__":
+def initialize_database_and_storage():
     principles = [
         'ibu',
         'paracetamol',
@@ -150,7 +150,6 @@ if __name__ == "__main__":
     prod_file = 'drugs_dict.json'
 
     dm = DataManager()
-    # dm.load_file_to_db_child(child='drugs', file_name=prod_file)
 
     pc = ProductCreator(active_principles=principles)
     pc.build_drugs_dict(out_file=prod_file)
@@ -168,5 +167,9 @@ if __name__ == "__main__":
     dm.load_file_to_db_child(child='drugs', where_from='json_files', file_name='drugs_dict.json')
 
     print('Process finished with no errors')
+
+
+if __name__ == "__main__":
+    initialize_database_and_storage()
 
 
