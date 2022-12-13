@@ -2,8 +2,10 @@ import json
 import pyrebase
 import pandas as pd
 import numpy as np
+import random
 import firebase_admin
 from firebase_admin import credentials, firestore
+from urllib.request import urlopen
 from pathlib import Path
 import os
 
@@ -26,8 +28,8 @@ class DataManager:
         self.storage = self.firebase.storage()
         self.db = self.firebase.database()
 
-    def load_file_to_db_child(self, child: str, file_name: str):
-        with open(f'json_files/{file_name}', 'r') as file:
+    def load_file_to_db_child(self, child: str, where_from: str, file_name: str):
+        with open(f'{where_from}/{file_name}', 'r') as file:
             contents = json.load(file)
         self.db.child(child).set(contents)
 
@@ -36,10 +38,17 @@ class DataManager:
         with open(f'json_files/{file_name}', 'w') as file:
             json.dump(data.val(), file)
 
+    def push_files_to_storage(self, where_from: str, where_to: str, file_names: list[str]):
+        for fn in file_names:
+            self.storage.child(f'{where_to}/{fn}').put(f'{where_from}/{fn}')
 
-
-class UserCreator:
-    pass
+    def get_files_from_storage(self, where_from: str, where_to: str):
+        all_files = self.storage.child(f'{where_from}').list_files()
+        for file in all_files:
+            try:
+                file.download_to_filename(f'{where_to}/{file.name}')
+            except:
+                print(f'Download for {file.name} Failed')
 
 
 class ProductCreator:
@@ -79,6 +88,47 @@ class ProductCreator:
             json.dump(self.drugs_dict, file)
 
 
+class UserCreator:
+    def __init__(self, n_patients: int = 5, n_hcp: int = 2):
+        self.n_patients = n_patients
+        self.n_hcp = n_hcp
+        self.dm = DataManager()
+        self.patients_dict = {}
+        self.hcp_dict = {}
+        self.users_dict = {
+            "patients": {},
+            "hcp": {}
+        }
+
+    def _load_patients(self):
+        url = self.dm.storage.child("base_users/patients.json").get_url(None)
+        self.patients_dict = json.loads(urlopen(url).read())
+
+    def _load_hcp(self):
+        url = self.dm.storage.child("base_users/hcp.json").get_url(None)
+        self.hcp_dict = json.loads(urlopen(url).read())
+
+    def _fill_patients_drugs(self):
+        url = self.dm.storage.child("medicine_data/drugs_dict.json").get_url(None)
+        drugs_dict = json.loads(urlopen(url).read())
+        drug_ids = list(drugs_dict.keys())
+        for (k, v) in self.patients_dict.items():
+            self.patients_dict[k]['drugs'] = random.choices(drug_ids, k=np.random.randint(1, 12))
+
+    def build_users_dict(self, verbose: bool = False, out_file: str = ''):
+        self._load_patients()
+        self._load_hcp()
+        self._fill_patients_drugs()
+        self.users_dict['patients'] = self.patients_dict
+        self.users_dict['hcp'] = self.hcp_dict
+
+        if verbose:
+            print(self.users_dict)
+
+        with open(f'json_files/{out_file}', 'w') as file:
+            json.dump(self.users_dict, file)
+
+
 if __name__ == "__main__":
     principles = [
         'ibu',
@@ -94,16 +144,29 @@ if __name__ == "__main__":
         'paroxetina',
         'lidocaina',
         'rizatriptan',
-        'glucosamina'
+        'glucosamina',
+        'cefixima'
     ]
     prod_file = 'drugs_dict.json'
 
     dm = DataManager()
-    uc = UserCreator()
-    pc = ProductCreator(active_principles=principles)
+    # dm.load_file_to_db_child(child='drugs', file_name=prod_file)
 
+    pc = ProductCreator(active_principles=principles)
     pc.build_drugs_dict(out_file=prod_file)
 
-    dm.load_file_to_db_child(child='drugs', file_name=prod_file)
-    # dm.load_file_to_db_child(child='users', file_name='users_mock.json')
-    # dm.get_file_from_db_child(child='users', file_name='output.json')
+    uc = UserCreator()
+    uc.build_users_dict(out_file='users.json')
+
+    # Uploading files to storage:
+    dm.push_files_to_storage(where_from='json_files', where_to='medicine_data', file_names=['drugs_dict.json'])
+    dm.push_files_to_storage(where_from='json_files', where_to='base_users',
+                             file_names=['patients.json', 'hcp.json', 'users.json'])
+
+    # Uploading data to db:
+    dm.load_file_to_db_child(child='users', where_from='json_files', file_name='users.json')
+    dm.load_file_to_db_child(child='drugs', where_from='json_files', file_name='drugs_dict.json')
+
+    print('Process finished with no errors')
+
+

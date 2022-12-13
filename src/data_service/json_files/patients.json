@@ -1,0 +1,52 @@
+{
+  "1": {
+    "name": "patient1",
+    "phone": "12345678",
+    "age": 32,
+    "credentials": {
+      "email": "patient1@gmail.com",
+      "password": "p1password"
+    },
+    "drugs": []
+  },
+  "2": {
+    "name": "patient2",
+    "phone": "12345679",
+    "age": 22,
+    "credentials": {
+      "email": "patient2@gmail.com",
+      "password": "p2password"
+    },
+    "drugs": []
+  },
+  "3": {
+    "name": "patient3",
+    "phone": "12345677",
+    "age": 36,
+    "credentials": {
+      "email": "patient3@gmail.com",
+      "password": "p3password"
+    },
+    "drugs": []
+  },
+  "4": {
+    "name": "patient4",
+    "phone": "12343678",
+    "age": 73,
+    "credentials": {
+      "email": "patient4@gmail.com",
+      "password": "p4password"
+    },
+    "drugs": []
+  },
+  "5": {
+    "name": "patient1",
+    "phone": "12245678",
+    "age": 65,
+    "credentials": {
+      "email": "patient5@gmail.com",
+      "password": "p5password"
+    },
+    "drugs": []
+  }
+}
