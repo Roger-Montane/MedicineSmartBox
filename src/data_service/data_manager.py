@@ -43,12 +43,13 @@ class DataManager:
             self.storage.child(f'{where_to}/{fn}').put(f'{where_from}/{fn}')
 
     def get_files_from_storage(self, where_from: str, where_to: str):
-        all_files = self.storage.child(f'{where_from}').list_files()
+        all_files = self.storage.child(f'{where_from}/').list_files()
         for file in all_files:
-            try:
-                file.download_to_filename(f'{where_to}/{file.name}')
-            except:
-                print(f'Download for {file.name} Failed')
+            if file.name.split('.')[-1] == 'json':
+                try:
+                    file.download_to_filename(f'{where_to}/{file.name}')
+                except:
+                    print(f'Download for {file.name} Failed')
 
 
 class ProductCreator:
@@ -71,7 +72,7 @@ class ProductCreator:
     def build_drugs_dict(self, verbose: bool = False, out_file: str = ''):
         self._load_csv()
         drugs_df = self._select_drugs()
-        for p in principles:
+        for p in self.principles:
             slice = drugs_df[drugs_df['Principio activo o asociaciÃ³n de principios activos'].isin([p])]
             if not slice.empty:
                 item = slice.iloc[0]
@@ -125,11 +126,43 @@ class UserCreator:
         if verbose:
             print(self.users_dict)
 
+        with open(f'json_files/patients.json', 'w') as file:
+            json.dump(self.patients_dict, file)
+
+        with open(f'json_files/hcp.json', 'w') as file:
+            json.dump(self.hcp_dict, file)
+
         with open(f'json_files/{out_file}', 'w') as file:
             json.dump(self.users_dict, file)
 
 
-def initialize_database_and_storage():
+def initialize_database_and_storage(dm: DataManager = DataManager(),
+                                    pc: ProductCreator = ProductCreator(),
+                                    uc: UserCreator = UserCreator()):
+    prod_file = 'drugs_dict.json'
+
+    pc.build_drugs_dict(out_file=prod_file)
+
+    uc.build_users_dict(out_file='users.json')
+
+    # Uploading files to storage:
+    dm.push_files_to_storage(where_from='json_files', where_to='medicine_data', file_names=['drugs_dict.json'])
+    dm.push_files_to_storage(where_from='json_files', where_to='base_users',
+                             file_names=['patients.json', 'hcp.json', 'users.json'])
+
+    # Uploading data to db:
+    dm.load_file_to_db_child(child='users', where_from='json_files', file_name='users.json')
+    dm.load_file_to_db_child(child='drugs', where_from='json_files', file_name='drugs_dict.json')
+
+    print('Process finished with no errors')
+
+
+def overwrite_json_files(dm: DataManager = DataManager()):
+    dm.get_files_from_storage(where_from='base_users', where_to='json_files')
+    dm.get_files_from_storage(where_from='medicine_data', where_to='json_files')
+
+
+if __name__ == "__main__":
     principles = [
         'ibu',
         'paracetamol',
@@ -147,29 +180,15 @@ def initialize_database_and_storage():
         'glucosamina',
         'cefixima'
     ]
-    prod_file = 'drugs_dict.json'
+    DM = DataManager()
+    PC = ProductCreator(active_principles=principles)
+    UC = UserCreator()
 
-    dm = DataManager()
+    action = 'initialize_db_and_storage'
 
-    pc = ProductCreator(active_principles=principles)
-    pc.build_drugs_dict(out_file=prod_file)
-
-    uc = UserCreator()
-    uc.build_users_dict(out_file='users.json')
-
-    # Uploading files to storage:
-    dm.push_files_to_storage(where_from='json_files', where_to='medicine_data', file_names=['drugs_dict.json'])
-    dm.push_files_to_storage(where_from='json_files', where_to='base_users',
-                             file_names=['patients.json', 'hcp.json', 'users.json'])
-
-    # Uploading data to db:
-    dm.load_file_to_db_child(child='users', where_from='json_files', file_name='users.json')
-    dm.load_file_to_db_child(child='drugs', where_from='json_files', file_name='drugs_dict.json')
-
-    print('Process finished with no errors')
-
-
-if __name__ == "__main__":
-    initialize_database_and_storage()
+    if action == 'initialize_db_and_storage':
+        initialize_database_and_storage(dm=DM, pc=PC, uc=UC)
+    elif action == 'overwrite_json_files':
+        overwrite_json_files(dm=DM)
 
 
