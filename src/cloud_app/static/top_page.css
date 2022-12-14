@@ -1,0 +1,51 @@
+/*---------------------------------CSS MENU SUPERIOR NAVIGATOR BAR-----------------------------------*/
+
+/* Container top of all the Menu Superior */
+#top-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 0 10px;
+    background: rgb(149, 113, 114);
+}
+
+/* Logo Menu Superior */
+.logo-msb {
+    margin-left: 0;
+    padding-top: 10px;
+}
+
+.logo-msb img {
+    width: 80px;
+    border-radius: 10px;
+}
+
+/* Navigator items of the Menu Superior */
+.menu-items {
+    text-align: right;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.menu-items nav ul {
+    display: inline-block;
+    list-style-type: none;
+}
+
+.menu-items nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.menu-items nav ul li a {
+    text-decoration: none;
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: "Times New Roman", serif;
+}
+
+.Menu-items nav ul li a:hover {
+    color: rgb(249, 207, 210);
+}

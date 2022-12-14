@@ -5,16 +5,40 @@
     <meta charset="UTF-8">
     <title>Medicine Smart Box</title>
     <link rel="stylesheet" href="{% static 'home_page.css' %}">
+    <link rel="stylesheet" href="{% static 'top_page.css' %}">
 </head>
 <body>
     <header style="grid-area: top_home_page">
-        <div>
+        <div id="top_container">
             <div class = "logo-msb">
-                <img src="/cloud_app/images/logo_mse.png">
+                <img src="{% static 'logo_mse.png' %}">
+            </div>
+            <div class="menu-items">
+                <nav>
+                    <ul>
+                        <li>
+                            <a>Home</a>
+                        </li>
+                        <li>
+                            <a>Log in</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </header>
+    <section style="grid-area: msb_title">
 
+    </section>
+    <section style="grid-area: msb_description">
+
+    </section>
+    <section style="grid-area: msb_photos">
+
+    </section>
+    <footer style="grid-area: footer_home_page">
+
+    </footer>
 
 
     {% include 'navbar.html' %}

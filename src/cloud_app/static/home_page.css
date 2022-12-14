@@ -1,4 +1,23 @@
 body {
-  background-color: lightblue;
-  font-family: verdana;
+    margin: 0;
+}
+
+#layout {
+    /* ------- Esto es para el cart display -------------*/
+    transition: margin-right .5s;
+    /* ------- Esto es para el cart display -------------*/
+    display: grid;
+    grid-template-areas:
+            'top_home_page'
+            'msb_title'
+            'msb_description'
+            'msb_photos'
+            'footer_home_page';
+}
+
+#layout section, footer {
+    column-gap: 5px;
+    row-gap: 5px;
+    text-align: center;
+    vertical-align: middle;
 }
