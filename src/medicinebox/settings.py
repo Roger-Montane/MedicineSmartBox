@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pages',
+    'cloud_app', # Hem afegit la nostre app al projecte de
 ]
 
 MIDDLEWARE = [
