@@ -162,6 +162,7 @@ def overwrite_json_files(dm: DataManager = DataManager()):
     dm.get_files_from_storage(where_from='medicine_data', where_to='json_files')
 
 
+# TODO: add functions to add/delete unique elements (either drugs or patients/hcp) to db
 if __name__ == "__main__":
     principles = [
         'ibu',
