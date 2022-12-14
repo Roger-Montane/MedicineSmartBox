@@ -1,2 +1,6 @@
 /data/
 .DS_Store
+/pyvenv.cfg
+/Include/
+/Lib/
+/Scripts/
