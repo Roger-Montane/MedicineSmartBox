@@ -4,4 +4,6 @@
 /Include/
 /Lib/
 /Scripts/
-/.idea/
+/__pycache__/
+*.iml
+*.pyc
