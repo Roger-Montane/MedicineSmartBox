@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+}
+
+#layout {
+    /* ------- Esto es para el cart display -------------*/
+    transition: margin-right .5s;
+    /* ------- Esto es para el cart displayT -------------*/
+    display: grid;
+    grid-template-areas:
+            'top_home_page'
+            'msb_title'
+            'msb_description'
+            'msb_photos'
+            'footer_home_page';
+}
+
+#layout section, footer {
+    column-gap: 5px;
+    row-gap: 5px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#titulo-box {
+    background: rgb(176,224,230);
+}
+
+#titulo-box h1 {
+    font-size: 50px;
+    line-height: 90%;
+    text-align: center;
+    color: black;
+}
+
+#titulo-box p {
+    animation: fadeIn 3s;
+    font-family: "Lucida Bright", serif;
+    font-size: 25px;
+    color: black;
+    line-height: 100%;
+    text-align: center;
+    margin: 10px;
+}
