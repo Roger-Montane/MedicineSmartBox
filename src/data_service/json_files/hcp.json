@@ -1,1 +1,29 @@
-{"1": {"name": "hcp1", "phone": "87654321", "age": 44, "credentials": {"email": "hcp1@gmail.com", "password": "hcp1password"}, "patients": ["1", "3", "4"]}, "2": {"name": "hcp2", "phone": "87654325", "age": 35, "credentials": {"email": "hcp2@gmail.com", "password": "hcp2password"}, "patients": ["2", "5"]}}
+{
+  "1": {
+    "name": "hcp1",
+    "phone": "87654321",
+    "age": 44,
+    "credentials": {
+      "email": "hcp1@gmail.com",
+      "password": "hcp1password"
+    },
+    "patients": [
+      "1",
+      "3",
+      "4"
+    ]
+  },
+  "2": {
+    "name": "hcp2",
+    "phone": "87654325",
+    "age": 35,
+    "credentials": {
+      "email": "hcp2@gmail.com",
+      "password": "hcp2password"
+    },
+    "patients": [
+      "2",
+      "5"
+    ]
+  }
+}
