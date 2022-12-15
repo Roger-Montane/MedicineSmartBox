@@ -22,23 +22,22 @@ body {
     vertical-align: middle;
 }
 
-#title_home_page {
-    background: #482122;
+#titulo-box {
+    background: rgb(176,224,230);
 }
 
-#title_home_page h1 {
-    font-family: "Lucida Handwriting", serif;
-    font-size: 100px;
+#titulo-box h1 {
+    font-size: 50px;
     line-height: 90%;
     text-align: center;
-    color: #D56164;
+    color: black;
 }
 
-#title_home_page p {
+#titulo-box p {
     animation: fadeIn 3s;
     font-family: "Lucida Bright", serif;
     font-size: 25px;
-    color: white;
+    color: black;
     line-height: 100%;
     text-align: center;
     margin: 10px;
