@@ -41,4 +41,17 @@ body {
     line-height: 100%;
     text-align: center;
     margin: 10px;
+    font-style: italic;
 }
+
+.product {
+    display: grid;
+    background: #5b80b2;
+    grid-template-columns: auto auto auto;
+    padding-top: 15px;
+}
+
+.product img{
+    margin-left: 40px;
+}
+
