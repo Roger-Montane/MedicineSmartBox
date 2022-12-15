@@ -4,47 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <title>Medicine Smart Box</title>
-    <link rel="stylesheet" href="{% static 'home_page.css' %}">
-    <link rel="stylesheet" href="{% static 'top_page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home_page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/top_page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
 </head>
-<body>
-    <header style="grid-area: top_home_page">
-        <div id="top_container">
-            <div class = "logo-msb">
-                <img src="{% static 'logo_mse.png' %}">
+<div id="layout">
+    <body>
+        <header style="grid-area: top_home_page">
+            <div id="top-container">
+                <div class = "logo-msb">
+                    <img src="{% static 'images/logo_mse.png' %}">
+                </div>
+                <div class="menu-items">
+                    <nav>
+                        <ul>
+                            <li>
+                                <a>Home</a>
+                            </li>
+                            <li>
+                                <a>Log in</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-            <div class="menu-items">
-                <nav>
-                    <ul>
-                        <li>
-                            <a>Home</a>
-                        </li>
-                        <li>
-                            <a>Log in</a>
-                        </li>
-                    </ul>
-                </nav>
+        </header>
+        <section id="title" style="grid-area: msb_title">
+            <h1>Medicine Smart Box</h1>
+            <p>The best way to keep control of the medicines you have</p>
+        </section>
+        <section style="grid-area: msb_description">
+
+        </section>
+        <section id="photos_product" style="grid-area: msb_photos">
+
+        </section>
+        <footer id ="foot" style="grid-area: footer_home_page">
+            <div class="foot_container">
+                <div class=row>
+                    <div class="footer_col_1">
+                        <div class="social_rs">
+                            <ul>
+                                <li>Follow us!</li>
+                                <li><a href="https://www.instagram.com/fffusiii/" target="_blank">
+                                    <img src="{% static 'images/instagram.png' %}" width=40px></a>
+                                    <a href="https://twitter.com/luciapadron16" target="_blank">
+                                        <img src="{% static 'images/twitter.png' %}" width=40px></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </header>
-    <section style="grid-area: msb_title">
-
-    </section>
-    <section style="grid-area: msb_description">
-
-    </section>
-    <section style="grid-area: msb_photos">
-
-    </section>
-    <footer style="grid-area: footer_home_page">
-
-    </footer>
-
-
-    {% include 'navbar.html' %}
-
-    {% block content %}
-        This is the base default, replace me!
-    {% endblock %}
-</body>
+        </footer>
+    </body>
+</div>
 </html>

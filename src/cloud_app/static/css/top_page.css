@@ -6,8 +6,8 @@
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
+    background: cadetblue;
     padding: 0 10px;
-    background: rgb(149, 113, 114);
 }
 
 /* Logo Menu Superior */
