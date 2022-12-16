@@ -1,25 +1,24 @@
 {% load static %}
-
+{% with user_name="Roger" %}
 <!-------------------------------------------- Menu Superior Sessió Iniciada ------------------------------------------>
-{% if sessio_iniciada == 1 %}
-    <div id="top-container">
-        <div class="logo-msb">
-            <img src="{% static 'images/logo_msb.png' %}">
-        </div>
-        <div class="menu-items">
-            <nav>
-                <ul>
-                    <li>
-                        <a>Home</a>
-                    </li>
-                    <li>
-                        <a>{{ user_name }}</a>
-                    </li>
-                    <li>
-                        <img src="{% static 'images/user_standard_image.png' %}" width=40px>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+<div id="top-container">
+    <div class="logo-msb">
+        <img src="{% static 'images/logo_msb.png' %}">
     </div>
-{% endif %}
+    <div class="menu-items">
+        <nav>
+            <ul>
+                <li>
+                    <a>Home</a>
+                </li>
+                <li>
+                    <a>{{ user_name }}</a>
+                </li>
+                <li>
+                    <img src="{% static 'images/user_standard_image.png' %}" width=40px>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endwith %}

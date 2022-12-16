@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+}
+#layout {
+    display: grid;
+    grid-template-areas:
+            'top_container top_container top_container'
+            'graph_consumption graph_consumption list_medicines'
+            'stadstics_user medicines_expiry_dates list_medicines'
+            'footer_user footer_user footer_user';
+}
+
+#layout section, footer {
+    column-gap: 5px;
+    row-gap: 5px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+#graph_consumption{
+    height: 500px;
+    border-color: #1b1b1b;
+    border-width: 2px;
+    justify-content: center;
+}
+
+#list_medicines{
+    height: 1000px;
+    justify-content: center;
+}
+
+#stadstics_user{
+    height: 500px;
+    justify-content: center;
+}
+
+#medicines_expiry_dates{
+    height: 500px;
+}

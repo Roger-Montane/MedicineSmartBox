@@ -1,13 +1,96 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>User Patient View</title>
-</head>
-<body>
-    <header>
-        {% include 'top_page.html' %}
-    </header>
+    <link rel="stylesheet" type="text/css" href="{% static 'user_patient.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'top_page.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'footer.css' %}">
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
 
-</body>
+</head>
+<div id="layout">
+    <body>
+    <header style="grid-area: top_container">
+        {% include 'top_page_user.html' %}
+    </header>
+    <section id="graph_consumption" style="grid-area: graph_consumption">
+        <h1>GRAPH</h1>
+        <canvas id="myChart" style="width:100%;max-width:800px; max-height: 500px;display: inline-grid"></canvas>
+        <script>
+            var xValues = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November ", "December"];
+            var yValues = [55, 49, 44, 24, 30, 70, 60, 55, 56, 24, 17, 38];
+            var barColors = ["red", "green", "blue", "orange", "brown"];
+
+            new Chart("myChart", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: "rgba(54, 162, 235, 0.2)",
+                        borderWidth: 2,
+                        borderColor: "black",
+                        data: yValues
+                    }]
+                },
+                options: {
+                    legend: {display: true},
+                    title: {
+                        display: true,
+                        text: "User Year Medicines Consumption"
+                    }
+                }
+            });
+        </script>
+    </section>
+    <section id="list_medicines" style="grid-area: list_medicines">
+        <h1>MEDICINES</h1>
+        <table>
+            <tr>
+                <th>Medicine</th>
+                <th>Active Principle</th>
+                <th>Number of Pills</th>
+                <th>Price</th>
+            </tr>
+            {% for x in list_medicines_user %}
+                <tr>
+                    <td>{x.medicine]</td>
+                    <td>{x.active_principle}</td>
+                    <td>{x.number_pills_user}</td>
+                    <td>{x.price}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+    <section id="stadstics_user" style="grid-area: stadstics_user">
+        <h1>STADISTICS</h1>
+            <p>MOST USED MEDICINE</p>
+            <p>LESS USED MEDICINE</p>
+            <p>MOST EXPENSIVE MEDICINE</p>
+            <p>CHEAPEST MEDICINE</p>
+            <p>MONTH WHERE MORE PILLS WERE TAKEN</p>
+    </section>
+    <section id="medicines_expiry_dates" style="grid-area: medicines_expiry_dates">
+        <h1>EXPIRY DATE</h1>
+        <table>
+            <tr>
+                <th>Medicine</th>
+                <th>Expiry Date</th>
+            </tr>
+            {% for x in list_medicines_user %}
+                <tr>
+                    <td>{x.medicine]</td>
+                    <td>{x.expiry_date}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+    <footer id="foot" style="grid-area: footer_user">
+        {% include 'footer.html' %}
+    </footer>
+    </body>
+</div>
 </html>
