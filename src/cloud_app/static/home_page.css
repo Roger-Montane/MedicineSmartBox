@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+}
+
+#layout {
+    display: grid;
+    grid-template-areas:
+            'top_home_page'
+            'msb_title'
+            'msb_title_benefits'
+            'msb_benefits'
+            'msb_photos'
+            'footer_home_page';
+}
+
+#layout section, footer {
+    column-gap: 5px;
+    row-gap: 5px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/*----------------------------------------Medicine Smart Box Title and Paragraph--------------------------------------*/
+#titulo-box {
+    background: rgb(176, 224, 230);
+}
+
+#titulo-box h1 {
+    font-size: 75px;
+    line-height: 90%;
+    text-align: center;
+    color: black;
+}
+
+#titulo-box p {
+    animation: fadeIn 3s;
+    font-family: "Lucida Bright", serif;
+    font-size: 25px;
+    color: black;
+    line-height: 100%;
+    text-align: center;
+    margin: 10px;
+    font-style: italic;
+    padding-bottom: 20px;
+}
+/*-----------------------------------------------Benefits Title-------------------------------------------------------*/
+#title-benefits {
+    background: #6f94c6;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+#title-benefits h1 {
+    margin: 15px;
+}
+
+/*----------------------------------------------------Benefits--------------------------------------------------------*/
+#benefits {
+    background: cadetblue;
+    display: flex;
+    justify-content: center;
+}
+
+.benefit-box {
+    flex-grow: 2; /* Amb aixo el que fem es dividir el espai en parts iguals */
+}
+
+#benefits img{
+    border-radius: 8px;
+}
+
+/*----------------------------------------------------Box Photos------------------------------------------------------*/
+#msb_photo {
+    display: grid;
+    background: #5b80b2;
+    grid-template-columns: auto auto auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.product img {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+

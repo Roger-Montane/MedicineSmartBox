@@ -4,60 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Medicine Smart Box</title>
-    <link rel="stylesheet" href="{% static 'css/home_page.css' %}">
-    <link rel="stylesheet" href="{% static 'css/top_page.css' %}">
-    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home_page.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'top_page.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'footer.css' %}">
 </head>
 <div id="layout">
     <body>
-        <header style="grid-area: top_home_page">
-            <div id="top-container">
-                <div class = "logo-msb">
-                    <img src="{% static 'images/logo_msb.png' %}">
-                </div>
-                <div class="menu-items">
-                    <nav>
-                        <ul>
-                            <li>
-                                <a>Home</a>
-                            </li>
-                            <li>
-                                <a href="log_in">Log in</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </header>
-        <section id="titulo-box" style="grid-area: msb_title">
-            <h1 id="titulo">Medicine Smart Box</h1>
-            <p>The best way to keep control of the medicines you have</p>
-        </section>
-        <section class="product" style="grid-area: msb_photos">
-            <div id="msb_photo">
-                <img src="{% static 'images/medical_box2.jpg' %}" width=500px>
-                <img src="{% static 'images/medical_box1.jpg' %}" width=500px>
-                <img src="{% static 'images/medical_box3.jpg' %}" width=500px>
-            </div>
-        </section>
-        <footer id ="foot" style="grid-area: footer_home_page">
-            <div class="foot_container">
-                <div class=row>
-                    <div class="footer_col_1">
-                        <div class="social_rs">
-                            <ul>
-                                <li>Follow us!</li>
-                                <li><a href="https://www.instagram.com/fffusiii/" target="_blank">
-                                    <img src="{% static 'images/instagram.png' %}" width=40px></a>
-                                    <a href="https://twitter.com/luciapadron16" target="_blank">
-                                        <img src="{% static 'images/twitter.png' %}" width=40px></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+    <header style="grid-area: top_home_page">
+        {% include 'top_page.html' %}
+    </header>
+    <section id="titulo-box" style="grid-area: msb_title">
+        <h1 id="titulo">Medicine Smart Box</h1>
+        <p>The best way to keep control of the medicines you have</p>
+    </section>
+    <section id="title-benefits" style="grid-area: msb_title_benefits">
+        <h1>Benefits</h1>
+    </section>
+    <section id="benefits" style="grid-area: msb_benefits">
+        <div class="benefit-box">
+            <h3><span>&#10003;</span> Medication mess solution</h3>
+            <img src="{% static 'images/ordenated_box.png' %}" width=300px>
+        </div>
+        <div class="benefit-box">
+            <h3><span>&#10003;</span> Avoid expiration of medicines</h3>
+            <img src="{% static 'images/expired_medicines.jpg' %}" width=300px>
+        </div>
+        <div class="benefit-box">
+            <h3><span>&#10003;</span> Medicines control from anywhere at any time</h3>
+            <img src="{% static 'images/controll_medicines.png' %}" width=300px>
+        </div>
+        <div class="benefit-box">
+            <h3><span>&#10003;</span> User consumption metrics</h3>
+            <img src="{% static 'images/consumption_graphs.png' %}" width=300px>
+        </div>
+        <div class="benefit-box">
+            <h3><span>&#10003;</span> Synchronization with the health care center</h3>
+            <img src="{% static 'images/health_care_sync.png' %}" width=300px>
+        </div>
+    </section>
+    <section class="product" style="grid-area: msb_photos">
+        <div id="msb_photo">
+            <img src="{% static 'images/medical_box2.jpg' %}" width=500px>
+            <img src="{% static 'images/medical_box1.jpg' %}" width=500px>
+            <img src="{% static 'images/medical_box3.jpg' %}" width=500px>
+        </div>
+    </section>
+    <footer id="foot" style="grid-area: footer_home_page">
+        {% include 'footer.html' %}
+    </footer>
     </body>
 </div>
 </html>
