@@ -1,0 +1,7 @@
+<!-- templates/registration/login.html -->
+<h2>Log In</h2>
+<form method="post">
+  {% csrf_token %} <!-- Aquest token s'utilitza per motius de seguretat, prevé d'atacs CSRF -->
+  {{ form.as_p }}
+  <button type="submit">Log In</button>
+</form>>
