@@ -1,6 +1,7 @@
 body {
     margin: 0;
 }
+
 #layout {
     display: grid;
     grid-template-areas:
@@ -15,26 +16,95 @@ body {
     row-gap: 5px;
     text-align: center;
     vertical-align: middle;
+    border-width: 5px;
+    border-color: #1b1b1b;
 }
 
 
-#graph_consumption{
+#graph_consumption {
     height: 500px;
-    border-color: #1b1b1b;
-    border-width: 2px;
     justify-content: center;
 }
 
-#list_medicines{
+#list_medicines {
     height: 1000px;
     justify-content: center;
 }
 
-#stadstics_user{
-    height: 500px;
-    justify-content: center;
+#list_medicines h1 {
+    height: 60px;
+    margin: 0;
+    padding-top: 20px;
+    font-family: sans-serif;
+    background: #5b80b2;
 }
 
-#medicines_expiry_dates{
+/*-----------------------------------------STADISTICS OF THE MEDICINES------------------------------------------------*/
+#stadstics_user {
     height: 500px;
+    justify-content: center;
+
+}
+
+#stadstics_user h1 {
+    height: 37px;
+    margin: 0;
+    padding-top: 10px;
+    font-family: sans-serif;
+    background: #5b80b2;
+}
+
+#stadstics_user p {
+    margin: 0;
+    font-size: 18px;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding-bottom: 5px;
+    background: #5b80b2;
+}
+
+/*-----------------------------------------STADISTICS OF THE MEDICINES------------------------------------------------*/
+#medicines_expiry_dates h1 {
+    height: 37px;
+    margin: 0;
+    padding-top: 10px;
+    font-family: sans-serif;
+    background: #5b80b2;
+}
+
+#medicines_expiry_dates p {
+    margin: 0;
+    font-size: 18px;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding-bottom: 5px;
+    background: #5b80b1;
+
+}
+
+
+#medicines_expiry_dates {
+    height: 500px;
+}
+
+
+table, td, th {
+    border: 3px solid black;
+    text-align: center;
+    width: 50px;
+    height: 80px;
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: bold;
+    border-radius: 8px;
+    background: aliceblue;
+}
+
+#stadstics_user tr {
+    border: 3px solid black;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
 }

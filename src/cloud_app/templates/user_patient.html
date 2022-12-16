@@ -17,8 +17,8 @@
     <header style="grid-area: top_container">
         {% include 'top_page_user.html' %}
     </header>
-    <section id="graph_consumption" style="grid-area: graph_consumption">
-        <h1>GRAPH</h1>
+    <section id="graph_consumption" style="grid-area: graph_consumption;background: aliceblue;">
+        <h1>User Year Medicines Consumption</h1>
         <canvas id="myChart" style="width:100%;max-width:800px; max-height: 500px;display: inline-grid"></canvas>
         <script>
             var xValues = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November ", "December"];
@@ -37,16 +37,13 @@
                     }]
                 },
                 options: {
-                    legend: {display: true},
-                    title: {
-                        display: true,
-                        text: "User Year Medicines Consumption"
-                    }
+                    legend: {display: false},
+                    title: {display: false}
                 }
             });
         </script>
     </section>
-    <section id="list_medicines" style="grid-area: list_medicines">
+    <section id="list_medicines" style="grid-area: list_medicines;background: aliceblue;">
         <h1>MEDICINES</h1>
         <table>
             <tr>
@@ -66,16 +63,40 @@
         </table>
     </section>
     <section id="stadstics_user" style="grid-area: stadstics_user">
-        <h1>STADISTICS</h1>
-            <p>MOST USED MEDICINE</p>
-            <p>LESS USED MEDICINE</p>
-            <p>MOST EXPENSIVE MEDICINE</p>
-            <p>CHEAPEST MEDICINE</p>
-            <p>MONTH WHERE MORE PILLS WERE TAKEN</p>
+        <table>
+            <tr>
+                <h1>User Stadistics</h1>
+                <p>Compilation of consumption statistics</p>
+            </tr>
+            <tr>
+                <td>Most Used Medicine</td>
+                <td>Almax</td>
+            </tr>
+            <tr>
+                <td>Less Used Medicine</td>
+                <td>Iboprufeno</td>
+            </tr>
+            <tr>
+                <td>Most Expensive Medicine</td>
+                <td>Almax</td>
+            </tr>
+            <tr>
+                <td>Cheapest Medicine</td>
+                <td>Naproxeno</td>
+            </tr>
+            <tr>
+                <td>Month where more pills were taken</td>
+                <td>January</td>
+            </tr>
+        </table>
+
     </section>
     <section id="medicines_expiry_dates" style="grid-area: medicines_expiry_dates">
-        <h1>EXPIRY DATE</h1>
         <table>
+            <tr>
+                <h1>Date of Expiry</h1>
+                <p>Expiring dates of the 5 medicines in the Medicine Smart Box that expire sooner</p>
+            </tr>
             <tr>
                 <th>Medicine</th>
                 <th>Expiry Date</th>
