@@ -8,8 +8,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'top_page.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'footer.css' %}">
 </head>
+<body>
 <div id="layout">
-    <body>
     <header style="grid-area: top_home_page">
         {% include 'top_page.html' %}
     </header>
@@ -52,6 +52,6 @@
     <footer id="foot" style="grid-area: footer_home_page">
         {% include 'footer.html' %}
     </footer>
-    </body>
 </div>
+</body>
 </html>

@@ -8,7 +8,7 @@ import datetime
 import firebase_admin
 from firebase_admin import credentials, firestore
 from urllib.request import urlopen
-from data_manager import DataManager
+from data_service.data_manager import DataManager
 from pathlib import Path
 import os
 
@@ -17,51 +17,53 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 class DataModifier:
     def __init__(self):
-        self.patients_file = 'json_files/patients.json'
-        self.hcp_file = 'json_files/hcp.json'
-        self.users_file = 'json_files/users.json'
-        self.drugs_file = 'json_files/drugs_dict.json'
+        self.patients_file = os.path.join(BASE_DIR, 'src/data_service/json_files/patients.json')
+        self.hcp_file = os.path.join(BASE_DIR, 'src/data_service/json_files/hcp.json')
+        self.users_file = os.path.join(BASE_DIR, 'src/data_service/json_files/users.json')
+        self.drugs_file = os.path.join(BASE_DIR, 'src/data_service/json_files/drugs_dict.json')
         self.data_manager = DataManager()
 
-    def _add_patient(self, patient_info: dict, upload: bool = True):
+    def _add_patient(self, patient_info: dict, upload: bool = True, key: str = 'default'):
         patients_dict = {}
         with open(self.patients_file, 'r+') as file:
             patients_dict = json.load(file)
 
-        key = list(patient_info.keys())[0]
-        patients_dict[key] = patient_info[key]
+        # key = str(int(list(patients_dict.keys())[-1]) + 1)
+        patients_dict[key] = patient_info
 
         with open(self.patients_file, 'w') as file:
             json.dump(patients_dict, file)
 
         if upload:
-            self.data_manager.push_files_to_storage(where_from='json_files', where_to='base_users',
+            self.data_manager.push_files_to_storage(where_from=os.path.join(BASE_DIR, 'src/data_service/json_files'),
+                                                    where_to='base_users',
                                                     file_names=['patients.json'])
 
-    def _add_hcp(self, hcp_info: dict, upload: bool = True):
+    def _add_hcp(self, hcp_info: dict, upload: bool = True, key: str = 'default'):
         hcp_dict = {}
         with open(self.hcp_file, 'r') as file:
             hcp_dict = json.load(file)
 
-        key = list(hcp_info.keys())[0]
-        hcp_dict[key] = hcp_info[key]
+        # key = str(int(list(hcp_dict.keys())[-1]) + 1)
+        hcp_dict[key] = hcp_info
 
         with open(self.hcp_file, 'w') as file:
             json.dump(hcp_dict, file)
 
         if upload:
-            self.data_manager.push_files_to_storage(where_from='json_files', where_to='base_users',
+            self.data_manager.push_files_to_storage(where_from=os.path.join(BASE_DIR, 'src/data_service/json_files'),
+                                                    where_to='base_users',
                                                     file_names=['hcp.json'])
 
-    def add_user(self, user_type: str, user_info: dict, upload: bool = True, verbose: bool = True):
+    def add_user(self, user_type: str, user_info: dict, upload: bool = True, key: str = 'default', verbose: bool = True):
         if not bool(user_info):
             print('Data is empty! Stopping')
             return
 
         if user_type == 'patient':
-            self._add_patient(patient_info=user_info, upload=upload)
+            self._add_patient(patient_info=user_info, upload=upload, key=key)
         elif user_type == 'hcp':
-            self._add_hcp(hcp_info=user_info, upload=upload)
+            self._add_hcp(hcp_info=user_info, upload=upload, key=key)
 
         patients_dict = {}
         with open(self.patients_file, 'r') as file:
@@ -80,9 +82,12 @@ class DataModifier:
             json.dump(users_dict, file)
 
         if upload:
-            self.data_manager.push_files_to_storage(where_from='json_files', where_to='base_users',
+            self.data_manager.push_files_to_storage(where_from=os.path.join(BASE_DIR, 'src/data_service/json_files'),
+                                                    where_to='base_users',
                                                     file_names=['users.json'])
-            self.data_manager.load_file_to_db_child(child='users', where_from='json_files', file_name='users.json')
+            self.data_manager.load_file_to_db_child(child='users',
+                                                    where_from=os.path.join(BASE_DIR, 'src/data_service/json_files'),
+                                                    file_name='users.json')
 
         if verbose:
             print(f'{user_type} {list(user_info.keys())[0]} added successfully')

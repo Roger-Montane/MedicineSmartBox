@@ -1,0 +1,44 @@
+<!-- templates/registration/login.html -->
+{% if message %}
+    <script>
+        alert('{{ message }}');
+    </script>
+{% endif %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medicine Smart Box</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'home_page.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'top_page.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'footer.css' %}">
+</head>
+<body>
+    <header style="grid-area: top_home_page">
+        {% include 'top_page.html' %}
+    </header>
+    <section id="titulo-box" style="grid-area: msb_title">
+        <h1 id="titulo">Patient Sign Up</h1>
+    </section>
+    <form action="/patient_post_sign_up/" method="post">
+        {% csrf_token %} <!-- Aquest token s'utilitza per motius de seguretat, prevé d'atacs CSRF -->
+        <br/>
+        <label for="age">Age</label><br>
+        <input type="number" id="age" name="age"><br><br>
+
+        <label for="name">Name</label><br>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="phone">Phone</label><br>
+        <input type="number" id="phone" name="phone"><br><br>
+        <!-- Enter Your Email: -->
+        <label for="email">Email</label><br>
+        <input type="email" id="email" name="email"><br><br>
+        <!-- Enter Your Password: -->
+        <label for="pass">Password</label><br>
+        <input type="password" id="pass" name="pass"><br><br>
+
+        <button type="submit" value="patient_signup">Patient Sign up</button>
+    </form>
+</body>
