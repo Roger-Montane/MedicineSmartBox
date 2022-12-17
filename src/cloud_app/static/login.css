@@ -8,8 +8,8 @@ body {
     display: grid;
     grid-template-areas:
             'top_container'
-            'signup_title'
-            'form_signup';
+            'login_title'
+            'form_login';
 }
 
 #layout section, footer {
@@ -21,8 +21,8 @@ body {
     border-color: #1b1b1b;
 }
 
-/*-----------------------------------------------------Titulo Sign Up--------------------------------------------------*/
-#signup_title {
+/*-----------------------------------------------------Titulo Log In--------------------------------------------------*/
+#login_title {
     text-align: center;
     font-size: 40px;
 }
@@ -30,7 +30,7 @@ body {
 /*----------------------------------------------------Box Formulario--------------------------------------------------*/
 .box_login {
     justify-content: center;
-    height: 400px;
+    height: 300px;
     width: 30%;
     border: 3px solid black;
     padding: 50px;
@@ -42,11 +42,15 @@ body {
     text-align: center;
 }
 
+#password_camp {
+    padding: 20px;
+}
+
 /*---------------------------------------------------------Input------------------------------------------------------*/
 
-input[type=email], input[type=password], input[type=number], input[type=text] {
+input[type=email], input[type=password] {
     width: 500px;
-    padding: 12px 15px;
+    padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 2px solid;

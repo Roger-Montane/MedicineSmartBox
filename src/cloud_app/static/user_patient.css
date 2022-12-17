@@ -44,7 +44,6 @@ body {
 
 /*--------------------------------------------GRPAH YEAR CONSUMPTION--------------------------------------------------*/
 #graph_consumption {
-    height: 500px;
     justify-content: center;
     border-style: solid;
     border-bottom-style: none;
@@ -54,7 +53,6 @@ body {
 /*-----------------------------------------------LIST OF MEDICINES----------------------------------------------------*/
 
 #list_medicines {
-    height: 1005px;
     justify-content: center;
     border-style: solid;
 }
@@ -69,7 +67,6 @@ body {
 
 /*-----------------------------------------STADISTICS OF THE MEDICINES------------------------------------------------*/
 #stadstics_user {
-    height: 500px;
     justify-content: center;
     border-style: solid;
     border-right-style: none;
@@ -96,9 +93,12 @@ body {
     border-left-style: solid;
 }
 
+#categories{
+    font-weight: bold;
+}
+
 /*--------------------------------------------MEDICINES EXPIRY DATES--------------------------------------------------*/
 #medicines_expiry_dates {
-    height: 500px;
     justify-content: center;
     border-style: solid;
     border-right-style: none;
@@ -126,7 +126,18 @@ body {
 
 /*-------------------------------------------------GENERAL TABLES-----------------------------------------------------*/
 
-table, td, th {
+table, td{
+    border: 3px solid black;
+    text-align: center;
+    width: 50px;
+    height: 80px;
+    font-size: 20px;
+    font-family: sans-serif;
+    border-radius: 8px;
+    background: aliceblue;
+}
+
+th {
     border: 3px solid black;
     text-align: center;
     width: 50px;
