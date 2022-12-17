@@ -67,13 +67,14 @@ body {
 }
 
 #benefits img{
+    animation: fadeIn 2s;
     border-radius: 8px;
 }
 
 /*----------------------------------------------------Box Photos------------------------------------------------------*/
 #msb_photo {
     display: grid;
-    background: #5b80b2;
+    background: #6f94c6;
     grid-template-columns: auto auto auto;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -83,7 +84,7 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
-
+/*----------------------------------------------------Animations------------------------------------------------------*/
 @keyframes fadeIn {
     0% {
         opacity: 0;
