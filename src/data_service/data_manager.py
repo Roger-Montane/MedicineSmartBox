@@ -98,11 +98,15 @@ class ProductCreator:
             if not slice.empty:
                 item = slice.iloc[0]
                 agrupation_name = p.split(' ')
+                try:
+                    n_caps = str(int(agrupation_name[3]))
+                except ValueError:
+                    n_caps = str(25)
                 self.drugs_dict[str(item['Código Nacional'])] = {
                     "name": item['Nombre del producto farmacéutico'],
                     "active_principle": ' '.join(agrupation_name[:3]),
                     # "active_principle": item['Principio activo o asociaciÃ³n de principios activos'],
-                    "n_capsules": ' '.join(agrupation_name[3:5]),
+                    "n_capsules": n_caps,
                     "pvp": item['Precio venta al público con IVA']
                 }
 
@@ -168,7 +172,7 @@ class UserCreator:
 
         return out
 
-    def _load_patients(self, load_from: str = "storage"):
+    def _load_patients(self, load_from: str = "file"):
         if load_from == "storage":
             url = self.dm.storage.child("base_users/patients.json").get_url(None)
             self.patients_dict = json.loads(urlopen(url).read())
@@ -176,7 +180,7 @@ class UserCreator:
             with open('json_files/patients.json', 'r') as file:
                 self.patients_dict = json.load(file)
 
-    def _load_hcp(self, load_from: str = "storage"):
+    def _load_hcp(self, load_from: str = "file"):
         if load_from == "storage":
             url = self.dm.storage.child("base_users/hcp.json").get_url(None)
             self.hcp_dict = json.loads(urlopen(url).read())
@@ -184,7 +188,7 @@ class UserCreator:
             with open('json_files/hcp.json', 'r') as file:
                 self.hcp_dict = json.load(file)
 
-    def _fill_patients_drugs(self, load_from: str = "storage"):
+    def _fill_patients_drugs(self, load_from: str = "file"):
         if load_from == "storage":
             url = self.dm.storage.child("medicine_data/drugs_dict.json").get_url(None)
             drugs_dict = json.loads(urlopen(url).read())
@@ -199,10 +203,10 @@ class UserCreator:
                 self.patients_dict[k]['drugs'][d] = self._fill_drug_info(prod_id=d)
             # self.patients_dict[k]['drugs'] = random.choices(drug_ids, k=np.random.randint(6, 20))
 
-    def build_users_dict(self, verbose: bool = False, out_file: str = '', load_from: str = "storage"):
+    def build_users_dict(self, verbose: bool = False, out_file: str = '', load_from: str = "file"):
         self._load_patients(load_from=load_from)
         self._load_hcp(load_from=load_from)
-        self._fill_patients_drugs()
+        self._fill_patients_drugs(load_from=load_from)
         self.users_dict['patients'] = self.patients_dict
         self.users_dict['hcp'] = self.hcp_dict
 
@@ -218,6 +222,14 @@ class UserCreator:
         with open(f'json_files/{out_file}', 'w') as file:
             json.dump(self.users_dict, file)
 
+    def sanity_check(self, user_type: str, key: str = 'default'):
+        if user_type == 'patient':
+            self._load_patients(load_from='file')
+            del self.patients_dict[key]
+        elif user_type == 'hcp':
+            self._load_hcp(load_from='file')
+            del self.hcp_dict[key]
+
 
 def load_database_and_storage(dm: DataManager = DataManager(),
                               pc: ProductCreator = ProductCreator(),
@@ -228,9 +240,9 @@ def load_database_and_storage(dm: DataManager = DataManager(),
     print("Building drugs_dict...", end=" ")
     pc.build_drugs_dict(out_file=prod_file, verbose=True)
     print("DONE")
-    print("Pushing 'json_files/drugs_dict.json' to storage...", end=" ")
-    dm.push_files_to_storage(where_from='json_files', where_to='medicine_data', file_names=['drugs_dict.json'])
-    print("DONE")
+    # print("Pushing 'json_files/drugs_dict.json' to storage...", end=" ")
+    # dm.push_files_to_storage(where_from='json_files', where_to='medicine_data', file_names=['drugs_dict.json'])
+    # print("DONE")
 
     print("Uploading drugs data to db...", end=" ")
     if method == "load":
@@ -240,12 +252,12 @@ def load_database_and_storage(dm: DataManager = DataManager(),
     print("DONE\n------------------------------------------------")
 
     print("Building users_dict...", end=" ")
-    uc.build_users_dict(out_file='users.json')
+    uc.build_users_dict(out_file='users.json', load_from='file')
     print("DONE")
-    print("Pushing 'json_files/[patients.json, hcp.json, users.json]' to storage...", end=" ")
-    dm.push_files_to_storage(where_from='json_files', where_to='base_users',
-                             file_names=['patients.json', 'hcp.json', 'users.json'])
-    print("DONE")
+    # print("Pushing 'json_files/[patients.json, hcp.json, users.json]' to storage...", end=" ")
+    # dm.push_files_to_storage(where_from='json_files', where_to='base_users',
+    #                          file_names=['patients.json', 'hcp.json', 'users.json'])
+    # print("DONE")
 
     print("Uploading users data to db...", end=" ")
     if method == "load":
@@ -258,6 +270,13 @@ def load_database_and_storage(dm: DataManager = DataManager(),
 
 
 def overwrite_json_files(dm: DataManager = DataManager()):
+    dm.push_files_to_storage(where_from='json_files', where_to='base_users',
+                             file_names=['users.json', 'hcp.json', 'patients.json'])
+    dm.push_files_to_storage(where_from='json_files', where_to='medicine_data',
+                             file_names=['drugs_dict.json'])
+
+
+def get_files_from_storage(dm: DataManager = DataManager()):
     dm.get_files_from_storage(where_from='base_users', where_to='json_files')
     dm.get_files_from_storage(where_from='medicine_data', where_to='json_files')
 
@@ -288,6 +307,8 @@ if __name__ == "__main__":
     action = 'initialize_db_and_storage'
 
     if action == 'initialize_db_and_storage':
-        load_database_and_storage(dm=DM, pc=PC, uc=UC, method="load")
+        load_database_and_storage(dm=DM, pc=PC, uc=UC, method="update")
     elif action == 'overwrite_json_files':
         overwrite_json_files(dm=DM)
+    elif action == 'get_files_from_storage':
+        get_files_from_storage(dm=DM)
