@@ -1,13 +1,122 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>User Patient View</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'user_patient.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'top_page.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'footer.css' %}">
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
+
 </head>
-<body>
-    <header>
-        {% include 'top_page.html' %}
+<div id="layout">
+    <body>
+    <header style="grid-area: top_container">
+        {% include 'top_page_user.html' %}
     </header>
-    <h1>User patient</h1>
 </body>
+    <section id="welcome_title" style="grid-area: welcome_title;">
+        <h1>Welcome {user_name}!</h1>
+        <p>Here you can check the stadistics and the medicines of your Medicine Smart Box</p>
+    </section>
+    <section id="graph_consumption" style="grid-area: graph_consumption;background: aliceblue;">
+        <h1>User Year Medicines Consumption</h1>
+        <canvas id="myChart" style="width:100%;max-width:800px; max-height: 500px;display: inline-grid"></canvas>
+        <script>
+            var xValues = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November ", "December"];
+            var yValues = [55, 49, 44, 24, 30, 70, 60, 55, 56, 24, 17, 38];
+            var barColors = ["red", "green", "blue", "orange", "brown"];
+
+            new Chart("myChart", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: "rgba(54, 162, 235, 0.2)",
+                        borderWidth: 2,
+                        borderColor: "black",
+                        data: yValues
+                    }]
+                },
+                options: {
+                    legend: {display: false},
+                    title: {display: false}
+                }
+            });
+        </script>
+    </section>
+    <section id="list_medicines" style="grid-area: list_medicines;background: aliceblue;">
+        <h1>MEDICINES</h1>
+        <table>
+            <tr>
+                <th>Medicine</th>
+                <th>Active Principle</th>
+                <th>Number of Pills</th>
+                <th>Price</th>
+            </tr>
+            {% for x in list_medicines_user %}
+                <tr>
+                    <td>{x.medicine]</td>
+                    <td>{x.active_principle}</td>
+                    <td>{x.number_pills_user}</td>
+                    <td>{x.price}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+    <section id="stadstics_user" style="grid-area: stadstics_user">
+        <table>
+            <tr>
+                <h1>User Stadistics</h1>
+                <p>Compilation of consumption statistics</p>
+            </tr>
+            <tr>
+                <td>Most Used Medicine</td>
+                <td>Almax</td>
+            </tr>
+            <tr>
+                <td>Less Used Medicine</td>
+                <td>Iboprufeno</td>
+            </tr>
+            <tr>
+                <td>Most Expensive Medicine</td>
+                <td>Almax</td>
+            </tr>
+            <tr>
+                <td>Cheapest Medicine</td>
+                <td>Naproxeno</td>
+            </tr>
+            <tr>
+                <td>Month where more pills were taken</td>
+                <td>January</td>
+            </tr>
+        </table>
+
+    </section>
+    <section id="medicines_expiry_dates" style="grid-area: medicines_expiry_dates">
+        <table>
+            <tr>
+                <h1>Date of Expiry</h1>
+                <p>Expiring dates of the 5 medicines in the Medicine Smart Box that expire sooner</p>
+            </tr>
+            <tr>
+                <th>Medicine</th>
+                <th class="no_border">Expiry Date</th>
+            </tr>
+            {% for x in list_medicines_user %}
+                <tr>
+                    <td>{x.medicine]</td>
+                    <td class="no_border">{x.expiry_date}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+    <footer id="foot" style="grid-area: footer_user">
+        {% include 'footer.html' %}
+    </footer>
+    </body>
+</div>
 </html>

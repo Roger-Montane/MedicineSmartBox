@@ -12,4 +12,3 @@ urlpatterns = [
     path('hcp_post_sign_up/', views.hcp_post_sign_up, name='hcp_post_sign_up'),
     path('logout/', views.logout, name="logout"),
 ]
-

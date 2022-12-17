@@ -1,0 +1,148 @@
+/*-------------------------------------------------General Structure--------------------------------------------------*/
+body {
+    margin: 0;
+}
+
+#layout {
+    display: grid;
+    grid-template-areas:
+            'top_container top_container top_container'
+            'welcome_title welcome_title welcome_title'
+            'graph_consumption graph_consumption list_medicines'
+            'stadstics_user medicines_expiry_dates list_medicines'
+            'footer_user footer_user footer_user';
+}
+
+#layout section, footer {
+    column-gap: 5px;
+    row-gap: 5px;
+    text-align: center;
+    vertical-align: middle;
+    border-width: 5px;
+    border-color: #1b1b1b;
+}
+
+/*-------------------------------------------------WELCOME TITLE------------------------------------------------------*/
+#welcome_title {
+    background: #6f94c6;
+    border-style: solid;
+    border-bottom-style: none;
+}
+
+#welcome_title h1 {
+    font-size: 35px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+#welcome_title p {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: sans-serif;
+
+}
+
+/*--------------------------------------------GRPAH YEAR CONSUMPTION--------------------------------------------------*/
+#graph_consumption {
+    height: 500px;
+    justify-content: center;
+    border-style: solid;
+    border-bottom-style: none;
+    border-right-style: none;
+}
+
+/*-----------------------------------------------LIST OF MEDICINES----------------------------------------------------*/
+
+#list_medicines {
+    height: 1005px;
+    justify-content: center;
+    border-style: solid;
+}
+
+#list_medicines h1 {
+    height: 60px;
+    margin: 0;
+    padding-top: 20px;
+    font-family: sans-serif;
+    background: #5b80b2;
+}
+
+/*-----------------------------------------STADISTICS OF THE MEDICINES------------------------------------------------*/
+#stadstics_user {
+    height: 500px;
+    justify-content: center;
+    border-style: solid;
+    border-right-style: none;
+}
+
+#stadstics_user h1 {
+    height: 37px;
+    margin: 0;
+    padding-top: 10px;
+    font-family: sans-serif;
+    background: #5b80b2;
+    border-right-style: solid;
+    border-left-style: solid;
+}
+
+#stadstics_user p {
+    margin: 0;
+    font-size: 18px;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding-bottom: 5px;
+    background: #5b80b2;
+    border-right-style: solid;
+    border-left-style: solid;
+}
+
+/*--------------------------------------------MEDICINES EXPIRY DATES--------------------------------------------------*/
+#medicines_expiry_dates {
+    height: 500px;
+    justify-content: center;
+    border-style: solid;
+    border-right-style: none;
+    border-left-style: none;
+}
+
+#medicines_expiry_dates h1 {
+    height: 37px;
+    margin: 0;
+    padding-top: 10px;
+    font-family: sans-serif;
+    background: #5b80b2;
+}
+
+#medicines_expiry_dates p {
+    margin: 0;
+    font-size: 18px;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding-bottom: 5px;
+    background: #5b80b1;
+
+}
+
+
+/*-------------------------------------------------GENERAL TABLES-----------------------------------------------------*/
+
+table, td, th {
+    border: 3px solid black;
+    text-align: center;
+    width: 50px;
+    height: 80px;
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: bold;
+    border-radius: 8px;
+    background: aliceblue;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.no_border{
+    border-right-style: none;
+}
