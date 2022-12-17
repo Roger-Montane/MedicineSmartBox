@@ -1,5 +1,4 @@
 {% load static %}
-{% with user_name="Roger" %}
 <!-------------------------------------------- Menu Superior Sessió Iniciada ------------------------------------------>
 <div id="top-container">
     <div class="logo-msb">
@@ -12,15 +11,12 @@
                     <a href="/home_page">Home</a>
                 </li>
                 <li>
-                    <a>{{ user_name }}</a>
+                    <a>{{ name }}</a>
                 </li>
                 <li>
-                    <a href="">
-                        <img src="{% static 'images/user_standard_image.png' %}" width=40px>
-                    </a>
+                    <img src="{% static 'images/user_standard_image.png' %}" width=40px>
                 </li>
             </ul>
         </nav>
     </div>
 </div>
-{% endwith %}

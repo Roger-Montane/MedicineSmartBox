@@ -6,6 +6,7 @@ import os
 from data_service.data_modifier import DataModifier
 from data_service.data_manager import DataManager, UserCreator
 import json
+from datetime import date, datetime
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -43,6 +44,60 @@ def sanity_check(user_type: str, key: str = 'default'):
     dm.update_file_to_db_child(child='users', where_from='json_files', file_name='users.json')
 
 
+def get_expiry_drugs(drugs_dict: dict, return_n: int = 4):
+    today = datetime.today()
+    date_distance = []
+    for (k, v) in drugs_dict.items():
+        d_date = datetime.strptime(v["expiration_date"], "%d-%m-%Y %H:%M %p")
+        dist = abs(d_date - today).days
+        date_distance.append((k, dist))
+
+    date_distance.sort(key=lambda x: x[1])
+    exp_drugs = {}
+    for tup in date_distance[:return_n]:
+        exp_drugs[tup[0]] = drugs_dict.get(tup[0])
+
+    exp_drugs = {k: v for k, v in sorted(exp_drugs.items(), key=lambda item: item[1]["expiration_date"])}
+
+    return exp_drugs
+
+
+def get_user_statistics(user_dict: dict):
+    drugs_dict = user_dict["drugs"]
+
+    tup = {}
+    for (k, v) in drugs_dict.items():
+        if k not in tup.keys():
+            tup[k] = v["pills_left"]
+        else:
+            tup[k] += v["pills_left"]
+
+    tup = {k: v for k, v in sorted(tup.items(), key=lambda item: item[1])}
+
+    # Most pills medicine
+    user_dict["most_pills"] = [drugs_dict[list(tup.keys())[-1]]["active_principle"], list(tup.values())[-1]]
+
+    # Less pills medicine
+    user_dict["least_pills"] = [drugs_dict[list(tup.keys())[0]]["active_principle"], list(tup.values())[0]]
+
+    most_expensive = ['a', -99999]
+    cheapest = ['a', 99999]
+    for (k, v) in drugs_dict.items():
+        if v["pvp"] >= most_expensive[1]:
+            most_expensive = [v["active_principle"], v["pvp"]]
+
+        if v["pvp"] <= cheapest[1]:
+            cheapest = [v["active_principle"], v["pvp"]]
+
+    # Most expensive medicine
+    user_dict["most_expensive_drug"] = most_expensive
+
+    # Cheapest medicine
+    user_dict["cheapest_drug"] = cheapest
+
+    return user_dict
+
+
 def home_view(request, *args, **kwargs):
     return render(request, 'home_page.html', {})
 
@@ -52,6 +107,7 @@ def log_in_view(request, *args, **kwargs):
 
 
 def user_patient_view(request, *args, **kwargs):
+    print('SESSION UID:', request.session['uid'], '======================')
     return render(request, 'user_patient.html', {})
 
 
@@ -61,14 +117,18 @@ def post_sign_in(request, *args, **kwargs):
     try:
         # if there is no error then signin the user with given email and password
         user = auth.sign_in_with_email_and_password(email, passw)
+        uid = user['localId']
     except:
         print(email, passw)
         message = "Invalid Credentials"
         return render(request, "login.html", {"message": message})
 
     session_id = user['idToken']
-    request.session['uid'] = str(session_id)
-    return render(request, "user_patient.html", {"email": email})
+    # request.session['uid'] = str(session_id)
+    user_info = db.child('users').child('patients').get(uid).val()[uid]
+    user_info["expiry_drugs"] = get_expiry_drugs(user_info["drugs"])
+    user_info = get_user_statistics(user_dict=user_info)
+    return render(request, "user_patient.html", context=user_info)
 
 
 def patient_sign_up(request, *args, **kwargs):

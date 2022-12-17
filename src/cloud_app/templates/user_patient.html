@@ -17,9 +17,9 @@
     <header style="grid-area: top_container">
         {% include 'top_page_user.html' %}
     </header>
-</body>
+    </body>
     <section id="welcome_title" style="grid-area: welcome_title;">
-        <h1>Welcome {user_name}!</h1>
+        <h1>Welcome {{ name }}!</h1>
         <p>Here you can check the stadistics and the medicines of your Medicine Smart Box</p>
     </section>
     <section id="graph_consumption" style="grid-area: graph_consumption;background: aliceblue;">
@@ -57,12 +57,12 @@
                 <th>Number of Pills</th>
                 <th>Price</th>
             </tr>
-            {% for x in list_medicines_user %}
+            {% for k, v in drugs.items %}
                 <tr>
-                    <td>{x.medicine]</td>
-                    <td>{x.active_principle}</td>
-                    <td>{x.number_pills_user}</td>
-                    <td>{x.price}</td>
+                    <td>{{ v.name }}</td>
+                    <td>{{ v.active_principle }}</td>
+                    <td>{{ v.pills_left }}</td>
+                    <td>{{ v.pvp }} €</td>
                 </tr>
             {% endfor %}
         </table>
@@ -74,24 +74,24 @@
                 <p>Compilation of consumption statistics</p>
             </tr>
             <tr>
-                <td>Most Used Medicine</td>
-                <td>Almax</td>
+                <td>Drug with most pills</td>
+                <td>{{ most_pills.0 }} ({{ most_pills.1 }} units)</td>
             </tr>
             <tr>
-                <td>Less Used Medicine</td>
-                <td>Iboprufeno</td>
+                <td>Drug with less pills</td>
+                <td>{{ least_pills.0 }} ({{ least_pills.1 }} units)</td>
             </tr>
             <tr>
                 <td>Most Expensive Medicine</td>
-                <td>Almax</td>
+                <td>{{ most_expensive_drug.0 }} ({{ most_expensive_drug.1 }} €)</td>
             </tr>
             <tr>
                 <td>Cheapest Medicine</td>
-                <td>Naproxeno</td>
+                <td>{{ cheapest_drug.0 }} ({{ cheapest_drug.1 }} €)</td>
             </tr>
             <tr>
                 <td>Month where more pills were taken</td>
-                <td>January</td>
+                <td>June</td>
             </tr>
         </table>
 
@@ -106,10 +106,10 @@
                 <th>Medicine</th>
                 <th class="no_border">Expiry Date</th>
             </tr>
-            {% for x in list_medicines_user %}
+            {% for k, v in expiry_drugs.items %}
                 <tr>
-                    <td>{x.medicine]</td>
-                    <td class="no_border">{x.expiry_date}</td>
+                    <td>{{ v.name }}</td>
+                    <td class="no_border">{{ v.expiration_date|slice:"0:10" }}</td>
                 </tr>
             {% endfor %}
         </table>

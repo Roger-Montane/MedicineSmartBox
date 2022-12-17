@@ -137,16 +137,23 @@ class UserCreator:
         random_second = random.randrange(int_delta)
         return start + datetime.timedelta(seconds=random_second)
 
-    def _get_pills_left(self, prod_id: str):
+    def _get_pills_and_name(self, prod_id: str):
         drug_info = {}
         with open('json_files/drugs_dict.json', 'r') as file:
             drug_info = json.load(file)
 
+        d = {}
+        prod = drug_info[prod_id]
         n_capsules = drug_info[prod_id]['n_capsules']
         if not n_capsules.split(' ')[0].isnumeric():
-            return '-'
+            d["n_capsules"] = "-"
+        else:
+            d["n_capsules"] = n_capsules
+        d["name"] = prod["name"].split(',')[0]
+        d["active_principle"] = prod["active_principle"]
+        d["pvp"] = prod["pvp"]
 
-        return n_capsules.split(' ')[0]
+        return d
 
     def _fill_drug_info(self, prod_id: str):
         curr_year = datetime.date.today().year
@@ -163,11 +170,15 @@ class UserCreator:
         expiration_date = self.random_date(start=date_logged_in,
                                            end=date_logged_in.replace(year=date_logged_in.year + 1))
 
+        d = self._get_pills_and_name(prod_id=prod_id)
         out = {
             "date_logged_in": date_logged_in.strftime(t_format),
             "date_logged_out": '-' if date_logged_out == '' else date_logged_out.strftime(t_format),
             "expiration_date": expiration_date.strftime(t_format),
-            "pills_left": self._get_pills_left(prod_id=prod_id)
+            "pills_left": d["n_capsules"],
+            "name": d["name"],
+            "pvp": d["pvp"],
+            "active_principle": d["active_principle"]
         }
 
         return out
