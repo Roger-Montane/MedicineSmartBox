@@ -49,7 +49,7 @@ def get_expiry_drugs(drugs_dict: dict, return_n: int = 4):
     date_distance = []
     for (k, v) in drugs_dict.items():
         d_date = datetime.strptime(v["expiration_date"], "%d-%m-%Y %H:%M %p")
-        dist = abs(d_date - today).days
+        dist = (d_date - today).days
         date_distance.append((k, dist))
 
     date_distance.sort(key=lambda x: x[1])
