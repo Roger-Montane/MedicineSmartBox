@@ -42,7 +42,7 @@ body {
 
 }
 
-/*--------------------------------------------GRPAH YEAR CONSUMPTION--------------------------------------------------*/
+/*--------------------------------------------GRAPH YEAR CONSUMPTION--------------------------------------------------*/
 #graph_consumption {
     justify-content: center;
     border-style: solid;
@@ -65,7 +65,7 @@ body {
     background: #5b80b2;
 }
 
-/*-----------------------------------------STADISTICS OF THE MEDICINES------------------------------------------------*/
+/*-----------------------------------------STATISTICS OF THE MEDICINES------------------------------------------------*/
 #stadstics_user {
     justify-content: center;
     border-style: solid;

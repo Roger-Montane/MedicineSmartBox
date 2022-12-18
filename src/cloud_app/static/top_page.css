@@ -10,7 +10,7 @@
     padding: 0 10px;
 }
 
-/* Logo Menu Superior */
+/*-----------------------------------------------------Logo Menu Superior---------------------------------------------*/
 .logo-msb {
     margin-left: 0;
     padding-top: 10px;
@@ -21,7 +21,7 @@
     border-radius: 10px;
 }
 
-/* Navigator items of the Menu Superior */
+/*-------------------------------------------Navigator items of the Menu Superior-------------------------------------*/
 .menu-items {
     text-align: right;
     margin-right: 0;
