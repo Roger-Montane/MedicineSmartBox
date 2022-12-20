@@ -68,9 +68,9 @@ def get_user_statistics(user_dict: dict):
     tup = {}
     for (k, v) in drugs_dict.items():
         if k not in tup.keys():
-            tup[k] = v["pills_left"]
+            tup[k] = int(v["pills_left"])
         else:
-            tup[k] += v["pills_left"]
+            tup[k] += int(v["pills_left"])
 
     tup = {k: v for k, v in sorted(tup.items(), key=lambda item: item[1])}
 
